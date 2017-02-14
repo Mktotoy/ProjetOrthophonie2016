@@ -23,11 +23,10 @@ class PauseVideoRepository extends \Doctrine\ORM\EntityRepository
         $queryPauseVideo->setParameters(array('dureeMin' => $dureeMin,
             'dureeMax' => $dureeMax));
 
-        $pauseVideos = $queryPauseVideo->getResult();
-
+        $pauseVideos = ($queryPauseVideo->getResult());
+        print_r($pauseVideos);
         // on prend un id aléatoire parmi les résultats
         $tabIdPauseVideo = array_rand($pauseVideos, 1);
-
         // on récupere l'entité de l'ID
         $queryPauseVideo = $em->createQuery(
             'SELECT pv

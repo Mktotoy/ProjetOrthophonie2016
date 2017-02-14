@@ -173,13 +173,20 @@
 
                         <!-- sidebar menu -->
                         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <div class="menu_section">
 
-                            <li>
-                                <a href="{{ path('fos_user_security_login')}}">Connexion</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('fos_user_registration_register')}}">Inscription</a>
-                            </li>
+                                <ul class="nav side-menu">
+                                    <li>
+                                        <a href="{{ path('fos_user_security_login')}}"><i class="fa fa-sign-in"></i>Connexion</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('fos_user_registration_register')}}"><i class="fa fa-plus"></i>Inscription</a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
                         </div>
                         <!-- /sidebar menu -->
 

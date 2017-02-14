@@ -1,0 +1,64 @@
+
+
+{% extends "UPONDOrthophonieBundle::layout.html.twig" %}
+
+{% block title %}
+    Statistique - {{ parent() }}
+{% endblock %}
+
+{% block orthophonie_body %}
+
+<div name="intitule">
+    <h1>Gestion des ressources multimédias</h1>
+</div>
+
+<form action="" methode="POST" class="Multimedias">
+<h3>Liste des images</h3>
+    <table class='table table-striped container'>
+        <tr>
+            <th>Image</th>
+            <th>Son</th>
+            <th>Texte</th>
+        </tr>
+
+        {% for multimedia in listMultimedias %}
+            <tr>
+                <td>
+                    <img src="{{ asset(multimedia.getImage) }}" class="img-thumbnail "/>
+                </td>
+                <td>
+                    <audio controls>
+                        <source src="{{ asset(multimedia.getSon) }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </td>
+                <td>
+                    <input class="" type="text" name="text_{{ multimedia.getIdMultimedia }}" value="{{ multimedia.getNom }}">
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+</form>
+{% endblock %}
+
+{% block javascripts_complement %}
+
+  <script>
+    $( document ).ready(function() {
+        $('[name="ListMedecins"]').each(function () {
+            idMedecin = $(this).val();
+            idPatient = $(this).attr("idPatient");
+            $('[name=idMedecin][idpatient='+idPatient+']').val(idMedecin);
+        });
+
+        $('[name="ListMedecins"]').change(function () {
+            idMedecin = $(this).val();
+            idPatient = $(this).attr("idPatient");
+            $('[name=idMedecin][idpatient='+idPatient+']').val(idMedecin);
+        });
+    });
+
+
+   </script>
+{% endblock %}

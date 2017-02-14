@@ -77,3 +77,7 @@ upond_orthophonie_administration_exercice_form:
 upond_orthophonie_administration_exercice_update_form:
     path:      /update_form_exercice
     defaults:  { _controller: UPONDOrthophonieBundle:Administration:exerciceUpdateForm }
+
+upond_orthophonie_administration_ressources_manager_images:
+    path:      /manage_images
+    defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesEdit }
