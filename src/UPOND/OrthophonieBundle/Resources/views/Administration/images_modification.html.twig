@@ -12,8 +12,10 @@
     <h1>Gestion des ressources multimédias</h1>
 </div>
 
-<form action="" methode="POST" class="Multimedias">
+<form action="{{ path('upond_orthophonie_administration_ressources_manager_images_update')}}" method="POST" class="Multimedias">
 <h3>Liste des images</h3>
+    <input type="submit" name="validate" value="Enregister" class="btn btn-success">
+
     <table class='table table-striped container'>
         <tr>
             <th>Image</th>
@@ -24,16 +26,18 @@
         {% for multimedia in listMultimedias %}
             <tr>
                 <td>
-                    <img src="{{ asset(multimedia.getImage) }}" class="img-thumbnail "/>
+                    <img src="{{ asset(multimedia.getImage) }}" width="300px" class="img-thumbnail "/>
+                    <input class="" type="hidden" name="image[]" value="{{ multimedia.getIDMultimedia }}">
                 </td>
                 <td>
                     <audio controls>
                         <source src="{{ asset(multimedia.getSon) }}" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
+                    <input class="" type="hidden" name="son[]" value="{{ multimedia.getIDMultimedia }}">
                 </td>
                 <td>
-                    <input class="" type="text" name="text_{{ multimedia.getIdMultimedia }}" value="{{ multimedia.getNom }}">
+                    <input class="" type="text" name="text[]" value="{{ multimedia.getNom }}">
                 </td>
 
             </tr>

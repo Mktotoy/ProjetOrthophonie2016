@@ -9,6 +9,7 @@
 namespace UPOND\OrthophonieBundle\Controller;
 
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 //use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -35,12 +36,60 @@ class RessourcesManagerController extends Controller
             return $this->redirectToRoute('upond_orthophonie_home');
         }
         // on recupere l'exercice associée a la strategie, la phase, le niveau et la partie
+        $page = isset($_GET['page'])?$_GET['page']:0;
+        $limit = 25;
+        //$pag = new Paginator();
         $em = $this->getDoctrine()->getManager();
         $MultimediaRepository = $em->getRepository('UPONDOrthophonieBundle:Multimedia');
 
 
-        $listMultimedia = $MultimediaRepository->findAll();
 
+        $listMultimedia = $MultimediaRepository->findBy(
+            array(),        // $where
+            array(),    // $orderBy
+            $limit,                        // $limit
+            $page                          // $offset
+        );
+        //print_r(var_dump($MultimediaRepository));
         return $this->render('UPONDOrthophonieBundle:Administration:images_modification.html.twig', array('listMultimedias' => $listMultimedia));
+    }
+    public function imagesCreateAction(Request $request){
+
+        if ($request->getSession()->get('role') != 'medecin') {
+            return $this->redirectToRoute('upond_orthophonie_home');
+        }
+        // on recupere l'exercice associée a la strategie, la phase, le niveau et la partie
+
+        //print_r(var_dump($MultimediaRepository));
+        return $this->render('UPONDOrthophonieBundle:Administration:images_modification.html.twig', array('listMultimedias' => $listMultimedia));
+    }
+
+    public function imagesEditUpdateAction(Request $request){
+
+        if ($request->getSession()->get('role') != 'medecin') {
+            return $this->redirectToRoute('upond_orthophonie_home');
+        }
+
+
+        if($request->getMethod() == 'POST') {
+
+
+            $em = $this->getDoctrine()->getManager();
+            $MultimediaRepository = $em->getRepository('UPONDOrthophonieBundle:Multimedia');
+
+            // on recupere l'id utilisateur via le formulaire POST précédent
+            $idMultimedias = $_POST['image'];
+            $idSon = $_POST['son'];
+            $textmedia = $_POST['text'];
+            // on récupère le patient
+            foreach($idMultimedias as $k=>$idm){
+                $actualmedia = $MultimediaRepository->find($idm);
+                $actualmedia->setNom($textmedia[$k]);
+            }
+
+            $em->flush();
+        }
+
+        return $this->forward("UPONDOrthophonieBundle:RessourcesManager:imagesEdit");
     }
 }
