@@ -36,22 +36,25 @@ class RessourcesManagerController extends Controller
             return $this->redirectToRoute('upond_orthophonie_home');
         }
         // on recupere l'exercice associée a la strategie, la phase, le niveau et la partie
-        $page = isset($_GET['page'])?$_GET['page']:0;
+        $page = isset($_GET['page'])?$_GET['page']:1;
         $limit = 25;
         //$pag = new Paginator();
         $em = $this->getDoctrine()->getManager();
         $MultimediaRepository = $em->getRepository('UPONDOrthophonieBundle:Multimedia');
 
 
+        $counttotal = count($MultimediaRepository->findAll());
+        $nbpages = ($counttotal%$limit)+1;
 
         $listMultimedia = $MultimediaRepository->findBy(
             array(),        // $where
             array(),    // $orderBy
             $limit,                        // $limit
-            $page                          // $offset
+            ($page-1)*$limit                          // $offset
         );
+
         //print_r(var_dump($MultimediaRepository));
-        return $this->render('UPONDOrthophonieBundle:Administration:images_modification.html.twig', array('listMultimedias' => $listMultimedia));
+        return $this->render('UPONDOrthophonieBundle:Administration:images_modification.html.twig', array('listMultimedias' => $listMultimedia,"nbpages"=> $nbpages,"page" => $page));
     }
     public function imagesCreateAction(Request $request){
 

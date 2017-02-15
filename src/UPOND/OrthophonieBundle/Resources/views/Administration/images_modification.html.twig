@@ -12,10 +12,21 @@
     <h1>Gestion des ressources multimédias</h1>
 </div>
 
-<form action="{{ path('upond_orthophonie_administration_ressources_manager_images_update')}}" method="POST" class="Multimedias">
-<h3>Liste des images</h3>
-    <input type="submit" name="validate" value="Enregister" class="btn btn-success">
+    <h3>Liste des images</h3>
+    <form action="{{ path('upond_orthophonie_administration_ressources_manager_images_update')}}" method="POST" class="Multimedias">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <ul class="pagination">
+                    <li><a href="{{ path('upond_orthophonie_administration_ressources_manager_images')}}?page={{ page-1 }}"><i class="fa fa-caret-left"></i> Page Précédent</a></li>
+                    <li><a href="{{ path('upond_orthophonie_administration_ressources_manager_images')}}?page={{ page+1 }}"> Page Suivant <i class="fa fa-caret-right"></i></a></li>
+                </ul>
+            </div>
 
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <input type="submit" name="validate" value="Enregister" class="btn btn-success">
+            </div>
+
+        </div>
     <table class='table table-striped container'>
         <tr>
             <th>Image</th>
