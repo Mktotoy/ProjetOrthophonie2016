@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="icon" href="{{ asset('assets/images/EMNP-logo.png') }}">
         <title>{% block title %}EMNP{% endblock %}</title>
 
         {% block stylesheets %}
@@ -21,7 +21,7 @@
             <link href="{{ asset('assets/css/maps/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet"/>
 
             <!-- Custom Theme Style -->
-            <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
 
         {% endblock %}
 
@@ -58,7 +58,7 @@
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
-                            <a href="{{ path('upond_orthophonie_home')}}" class="site_title"><i class="fa fa-paw"></i> <span>EMNP</span></a>
+                            <a href="{{ path('upond_orthophonie_home')}}" class="site_title"><img class="" height="100%" src="{{ asset('assets/images/EMNP-logo.png') }}"/> <span>EMNP</span></a>
                         </div>
 
                         <div class="clearfix"></div>
@@ -69,7 +69,7 @@
                                 <img src="http://164.132.227.93/LearnPlatform/assets/img/profile.jpg" alt="..." class="img-circle profile_img">
                             </div>
                             <div class="profile_info">
-                                <span>Welcome MR</span>
+                                <span>Bonjour {{ app.user.getPrenom }}</span>
                                 <h2> </h2>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="">
                                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        Nom Prénom <img src="http://164.132.227.93/LearnPlatform//assets/img/profile.jpg" alt=""><span class=" fa fa-angle-down"></span>
+                                        {{ app.user.getPrenom }} {{ app.user.getNom }} <img src="http://164.132.227.93/LearnPlatform//assets/img/profile.jpg" alt=""><span class=" fa fa-angle-down"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                                         <li>
@@ -226,7 +226,7 @@
                     {% if app.user is null %}
                         {{ render(controller("UPONDOrthophonieBundle:Connexion:accueil")) }}
                     {% endif %}
-                    <div id="content" class="col-md-9">
+                    <div id="content" class="col-md-12">
                         {% block body %}
                         {% endblock %}
                     </div>
@@ -242,7 +242,7 @@
                 {% endjavascripts %}
                 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
                 <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-                <script src="{{ asset('assets/js/custom.min.js') }}"></script>
+                <script src="{{ asset('assets/js/custom.js') }}"></script>
 
             {% endblock %}
             {% block javascripts_complement %}

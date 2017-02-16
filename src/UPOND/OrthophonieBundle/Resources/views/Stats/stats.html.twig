@@ -6,43 +6,20 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css">
+
     {#<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"/>#}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css"/>
 
-    <style>
-        ul {
-            margin-top: 25px;
-            padding-left: 0;
-        }
 
-        li {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 10px;
-        }
-
-        .item {
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .item:hover {
-            background-color: #eee;
-        }
-    </style>
 {% endblock %}
 
 {% block orthophonie_body %}
-
+    <div name="intitule">
+        <h1>Statistiques</h1>
+    </div><div name="intitule">
+    <h1>Gestion des médecins</h1>
+</div>
     <div class="container">
-
-        <hr style="margin: 50px 0 0 0">
-
-        <div class="text-center" style="margin: 25px 0">
-            <h4>Statistiques</h4>
-        </div>
 
         <div style="height: 300px">
             <canvas id="myChart"></canvas>

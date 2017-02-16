@@ -35,7 +35,7 @@ class RessourcesManagerController extends Controller
         if ($request->getSession()->get('role') != 'medecin') {
             return $this->redirectToRoute('upond_orthophonie_home');
         }
-        // on recupere l'exercice associée a la strategie, la phase, le niveau et la partie
+        // on recupere l'exercice associï¿½e a la strategie, la phase, le niveau et la partie
         $page = isset($_GET['page'])?$_GET['page']:1;
         $limit = 25;
         //$pag = new Paginator();
@@ -61,10 +61,10 @@ class RessourcesManagerController extends Controller
         if ($request->getSession()->get('role') != 'medecin') {
             return $this->redirectToRoute('upond_orthophonie_home');
         }
-        // on recupere l'exercice associée a la strategie, la phase, le niveau et la partie
+        // on recupere l'exercice associï¿½e a la strategie, la phase, le niveau et la partie
 
         //print_r(var_dump($MultimediaRepository));
-        return $this->render('UPONDOrthophonieBundle:Administration:images_modification.html.twig', array('listMultimedias' => $listMultimedia));
+        return $this->render('UPONDOrthophonieBundle:Administration:images_creation.html.twig', array());
     }
 
     public function imagesEditUpdateAction(Request $request){
@@ -80,11 +80,11 @@ class RessourcesManagerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $MultimediaRepository = $em->getRepository('UPONDOrthophonieBundle:Multimedia');
 
-            // on recupere l'id utilisateur via le formulaire POST précédent
+            // on recupere l'id utilisateur via le formulaire POST prï¿½cï¿½dent
             $idMultimedias = $_POST['image'];
             $idSon = $_POST['son'];
             $textmedia = $_POST['text'];
-            // on récupère le patient
+            // on rï¿½cupï¿½re le patient
             foreach($idMultimedias as $k=>$idm){
                 $actualmedia = $MultimediaRepository->find($idm);
                 $actualmedia->setNom($textmedia[$k]);
