@@ -62,8 +62,9 @@ class PartieController extends Controller
                 'with_seconds' => 'true',
                 'attr' => array('class' => 'form-control')
             ))
-            ->add('Creer une partie', SubmitType::class, array(
-                'attr' => array('class' => 'btn btn-success')));
+            ->add('Valider', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-primary')));
+
 
         // À partir du formBuilder, on génère le formulaire
         $form = $formBuilder->getForm();

@@ -90,3 +90,7 @@ upond_orthophonie_administration_ressources_manager_images_creation:
     path:      /manage_images_creation
     defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesCreate }
 
+upond_orthophonie_administration_ressources_manager_images_creation_do:
+    path:      /manage_images_creation_do
+    defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesCreateDo }
+
