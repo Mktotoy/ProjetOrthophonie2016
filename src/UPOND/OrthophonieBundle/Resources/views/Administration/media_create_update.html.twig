@@ -19,6 +19,15 @@
                     <div class="alert alert-success" role="alert">{{ success_message }}</div>
                 {% endif %}
 
+                <h3>Strategie</h3>
+                <select class="form-control" name="strategie">
+                    {% for strat in strategies_opt %}
+                        <option value="{{ strat.getIdStrategie }}">{{ strat.getNom }}</option>
+                    {% endfor %}
+                </select>
+
+                <hr>
+
                 <h3>Image</h3>
                 <!-- image-preview-filename input [CUT FROM HERE]-->
 

@@ -65,9 +65,11 @@ class RessourcesManagerController extends Controller
             return $this->redirectToRoute('upond_orthophonie_home');
         }
         // on recupere l'exercice associ�e a la strategie, la phase, le niveau et la partie
-
+         $em = $this->getDoctrine()->getManager();
+        $strategie = $em->getRepository('UPONDOrthophonieBundle:Strategie');
+        $list_strategie= $strategie->findAll();
         //print_r(var_dump($MultimediaRepository));
-        return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create"));
+        return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","strategies_opt" => $list_strategie));
     }
 
     public function imagesCreateDoAction(Request $request){
@@ -76,7 +78,9 @@ class RessourcesManagerController extends Controller
             return $this->redirectToRoute('upond_orthophonie_home');
         }
 
-        $maxsize = ini_get('post_max_size');
+        $em = $this->getDoctrine()->getManager();
+        $strategie = $em->getRepository('UPONDOrthophonieBundle:Strategie');
+        $list_strategie= $strategie->findAll();
 
         //TEST SI FICHIERS CONFORMES
         $error_tab= array(
@@ -87,9 +91,9 @@ class RessourcesManagerController extends Controller
         );
 
         if ($_FILES['img']['error'] > 0)
-            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","erreur_img" => $error_tab[$_FILES['img']['error']].$maxsize));
+            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","strategies_opt" => $list_strategie,"erreur_img" => $error_tab[$_FILES['img']['error']].$maxsize));
         if ($_FILES['audio']['error'] > 0)
-            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","erreur_audio" =>  $error_tab[$_FILES['audio']['error']].$maxsize));
+            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","strategies_opt" => $list_strategie,"erreur_audio" =>  $error_tab[$_FILES['audio']['error']].$maxsize));
 
 
         $img_extensions_valides = array( 'jpg' , 'jpeg' , 'png');
@@ -101,23 +105,37 @@ class RessourcesManagerController extends Controller
         $audio_extension_upload = strtolower(  substr(  strrchr($_FILES['audio']['name'], '.')  ,1)  );
 
         if ( !in_array($img_extension_upload,$img_extensions_valides) )
-            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","erreur_img" => "Extension non valide"));
+            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","strategies_opt" => $list_strategie,"erreur_img" => "Extension non valide"));
         if ( !in_array($audio_extension_upload,$audio_extensions_valides) )
-            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","erreur_audio" =>  "Extension non valide"));
+            return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","strategies_opt" => $list_strategie,"erreur_audio" =>  "Extension non valide"));
 
+
+        $obj_strategie= $strategie->findBy(
+            array('idStrategie' => $_POST['strategie']))[0];
 
         $success_message="";
-        $image = "Banque images et sons/Images/".$_POST['nom'].".".$img_extension_upload;
+        $image = "Banque images et sons/Images/".$obj_strategie->getNom()."/".$_POST['nom'].".".$img_extension_upload;
         $resultat_img = move_uploaded_file($_FILES['img']['tmp_name'],$image);
         if ($resultat_img) $success_message.= "ajout image réussi<br>";
 
-        $audio = "Banque images et sons/Sons/".$_POST['nom'].".".$audio_extension_upload;
+        $audio = "Banque images et sons/Sons//".$obj_strategie->getNom()."/".$_POST['nom'].".".$audio_extension_upload;
         $resultat_audio = move_uploaded_file($_FILES['audio']['tmp_name'],$audio);
         if ($resultat_audio) $success_message.= "ajout son réussi<br>";
 
+        // ajout de l'utilisateur dans la table patient
+        $multimedia = new Multimedia();
+        $multimedia->setImage($image);
+        $multimedia->setNom($_POST['nom']);
+        $multimedia->setStrategie($obj_strategie);
+        $multimedia->setSon($audio);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($multimedia);
+        $em->flush();
+
         $success_message.= "Multimedia resussi";
         //FIN TEST FICHIERS CONFORMES
-        return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","success_message"=>$success_message));
+        return $this->render('UPONDOrthophonieBundle:Administration:media_create_update.html.twig', array("action" => "Create","strategies_opt" => $list_strategie,"success_message"=>$success_message));
     }
 
     public function imagesEditUpdateAction(Request $request){
