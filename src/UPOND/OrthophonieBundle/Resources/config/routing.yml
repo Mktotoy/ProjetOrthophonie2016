@@ -82,9 +82,9 @@ upond_orthophonie_administration_ressources_manager_images:
     path:      /manage_images
     defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesEdit }
 
-upond_orthophonie_administration_ressources_manager_images_update:
-    path:      /manage_images_update
-    defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesEditUpdate }
+upond_orthophonie_administration_ressources_manager_images_update_simple:
+    path:      /manage_images_update_simple
+    defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesEditUpdateSimple }
 
 upond_orthophonie_administration_ressources_manager_images_creation:
     path:      /manage_images_creation
@@ -93,4 +93,12 @@ upond_orthophonie_administration_ressources_manager_images_creation:
 upond_orthophonie_administration_ressources_manager_images_creation_do:
     path:      /manage_images_creation_do
     defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesCreateDo }
+
+upond_orthophonie_administration_ressources_manager_images_update:
+    path:      /manage_images_update
+    defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesUpdate }
+
+upond_orthophonie_administration_ressources_manager_images_update_do:
+    path:      /manage_images_update_do
+    defaults:  { _controller: UPONDOrthophonieBundle:RessourcesManager:imagesUpdateDo }
 

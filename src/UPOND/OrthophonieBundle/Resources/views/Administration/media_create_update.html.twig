@@ -3,7 +3,7 @@
 {% extends "UPONDOrthophonieBundle::layout.html.twig" %}
 
 {% block title %}
-    Statistique - {{ parent() }}
+    Création/Modification médias - {{ parent() }}
 {% endblock %}
 
 {% block orthophonie_body %}
@@ -13,16 +13,22 @@
 </div>
     <div class="container">
         <div class="row">
-            <form method="POST" action="{{ path('upond_orthophonie_administration_ressources_manager_images_creation_do')}}" class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" enctype="multipart/form-data" >
+            <form method="POST" action="{{ path(action_path)}}" class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" enctype="multipart/form-data" >
 
                 {% if success_message is defined %}
                     <div class="alert alert-success" role="alert">{{ success_message }}</div>
                 {% endif %}
 
+
+
                 <h3>Strategie</h3>
                 <select class="form-control" name="strategie">
                     {% for strat in strategies_opt %}
-                        <option value="{{ strat.getIdStrategie }}">{{ strat.getNom }}</option>
+                        {% if (obj_multimedia is defined) and (obj_multimedia.getStrategie.getIdStrategie == strat.getIdStrategie) %}
+                            <option value="{{ strat.getIdStrategie }}" selected>{{ strat.getNom }}</option>
+                        {% else %}
+                            <option value="{{ strat.getIdStrategie }}" >{{ strat.getNom }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
 
@@ -32,7 +38,7 @@
                 <!-- image-preview-filename input [CUT FROM HERE]-->
 
                 {% if action == 'Update' %}
-                    <input type="hidden" name="media_id" value="{{ media_id }}">
+                    <input type="hidden" name="media_id" value="{{ obj_multimedia.getIdMultimedia }}">
                 {% endif %}
 
 
@@ -43,7 +49,7 @@
 
 
                 {% if action == 'Update' %}
-                    <img src="{{ media_src }}" width="200" id="imgpreview" class="img-responsive"/>
+                    <img src="{{ asset(obj_multimedia.getImage) }}" width="200" id="imgpreview" class="img-responsive"/>
                 {% else %}
                     <img src="#" width="200" id="imgpreview" class="img-responsive" style="display: none"/>
                 {% endif %}
@@ -54,10 +60,13 @@
                 <h3>Son</h3>
                 <input type="file" id="files" onchange="readAudio(this);" name="audio"/>
 
-                <!--<audio controls>
-                    <source id="audiopreview" src="#" type="audio/mpeg">
+                {% if action == 'Update' %}
+                <audio controls>
+                    <source id="audiopreview" src="{{ asset(obj_multimedia.getSon) }}" type="audio/mpeg">
                     Your browser does not support the audio element.
-                </audio>-->
+                </audio>
+                {% endif %}
+
                 {% if erreur_audio is defined %}
                     <div class="alert alert-danger" role="alert">{{ erreur_audio }}</div>
                 {% endif %}
@@ -66,8 +75,11 @@
 
                 <hr>
                 <h3>Nom</h3>
-                <input type="text" class="form-control" name="nom" placeholder="Texte...">
-
+                {% if action == 'Update' %}
+                    <input type="text" class="form-control" name="nom" value="{{ obj_multimedia.getNom }}" placeholder="Texte..." required>
+                {% else %}
+                    <input type="text" class="form-control" name="nom" placeholder="Texte..." required>
+                {% endif %}
                 <input type="submit" class="btn btn-success" value="Enregistrer">
 
             </form>

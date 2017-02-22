@@ -38,6 +38,13 @@ class Strategie
     private $nom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_simple", type="string", nullable=true)
+     */
+    private $nom_simple;
+
+    /**
      * @ORM\OneToMany(targetEntity="UPOND\OrthophonieBundle\Entity\Exercice", mappedBy="strategie")
      */
     private $exercices;
@@ -87,7 +94,29 @@ class Strategie
     {
         return $this->nom;
     }
+    /**
+     * Set nom_simple
+     *
+     * @param string $nom_simple
+     *
+     * @return Strategie
+     */
+    public function setNomSimple($nomsimple)
+    {
+        $this->nom_simple = $nomsimple;
 
+        return $this;
+    }
+
+    /**
+     * Get nom_simple
+     *
+     * @return string
+     */
+    public function getNomSimple()
+    {
+        return $this->nom_simple;
+    }
     /**
      * Add exercice
      *
