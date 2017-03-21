@@ -197,7 +197,7 @@ class ExerciceController extends Controller
                         if($session->get('phase')->getNom() == "Transfert")
                         {
                             // on recupere une video aleatoire entre 7 et 30 min
-                            $pauseVideo = $PauseVideoRepository->getVideoAleatoire(420, 1800);
+                            $pauseVideo = $PauseVideoRepository->getVideoAleatoire(1, 1800);
                         }
 
 
